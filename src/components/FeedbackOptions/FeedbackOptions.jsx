@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Button, Div } from './FeedbackOptions.styled';
 
 export const FeedbackOptions = ({ handleClick }) => {
@@ -28,4 +29,8 @@ export const FeedbackOptions = ({ handleClick }) => {
       </Div>
     </>
   );
+};
+
+FeedbackOptions.propTypes = {
+  handleClick: PropTypes.func.isRequired,
 };
