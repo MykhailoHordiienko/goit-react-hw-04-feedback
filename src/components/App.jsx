@@ -32,6 +32,7 @@ export class App extends Component {
     const { good, neutral, bad } = this.state;
     const total = this.countTotalFeedback();
     const positive = this.countPositiveFeedbackPercentage();
+    const options = Object.keys(this.state);
 
     return (
       <div
@@ -46,7 +47,7 @@ export class App extends Component {
         }}
       >
         <Section title={'Please leve Feedback'}>
-          <FeedbackOptions handleClick={onClick} />
+          <FeedbackOptions handleClick={onClick} options={options} />
         </Section>
         <Section title={'Statistics'}>
           {total > 0 ? (

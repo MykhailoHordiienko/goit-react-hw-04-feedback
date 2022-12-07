@@ -1,31 +1,22 @@
 import PropTypes from 'prop-types';
 import { Button, Div } from './FeedbackOptions.styled';
 
-export const FeedbackOptions = ({ handleClick }) => {
+export const FeedbackOptions = ({ handleClick, options }) => {
   return (
     <>
       <Div>
-        <Button
-          type="button"
-          name="good"
-          onClick={e => handleClick(e.currentTarget.name)}
-        >
-          Good
-        </Button>
-        <Button
-          type="button"
-          name="neutral"
-          onClick={e => handleClick(e.currentTarget.name)}
-        >
-          Neutral
-        </Button>
-        <Button
-          type="button"
-          name="bad"
-          onClick={e => handleClick(e.currentTarget.name)}
-        >
-          Bad
-        </Button>
+        {options.map(el => {
+          return (
+            <Button
+              key={el}
+              type="button"
+              name={el}
+              onClick={e => handleClick(e.currentTarget.name)}
+            >
+              {el}
+            </Button>
+          );
+        })}
       </Div>
     </>
   );
