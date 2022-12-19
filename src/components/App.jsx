@@ -1,68 +1,64 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Section } from './Section/Section';
 import { Statistics } from './Statistics/Statistics';
 import { Notification } from './Notification/Notification';
 
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+export const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const onClick = name => {
+    switch (name) {
+      case 'good':
+        setGood(prev => prev + 1);
+        break;
+      case 'neutral':
+        setNeutral(prev => prev + 1);
+        break;
+      case 'bad':
+        setBad(prev => prev + 1);
+        break;
+      default:
+        return;
+    }
   };
 
-  onClick = name => {
-    this.setState(prevState => ({
-      [name]: prevState[name] + 1,
-    }));
-  };
+  const total = good + neutral + bad;
 
-  countTotalFeedback = () => {
-    return Object.values(this.state).reduce((acc, sum) => acc + sum, 0);
-  };
+  const positive = Math.round((good * 100) / total);
 
-  countPositiveFeedbackPercentage = () => {
-    const { good } = this.state;
-    const total = this.countTotalFeedback();
-    return Math.round((good * 100) / total);
-  };
+  const options = ['good', 'neutral', 'bad'];
 
-  render() {
-    const { onClick } = this;
-    const { good, neutral, bad } = this.state;
-    const total = this.countTotalFeedback();
-    const positive = this.countPositiveFeedbackPercentage();
-    const options = Object.keys(this.state);
-
-    return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-        }}
-      >
-        <Section title={'Please leve Feedback'}>
-          <FeedbackOptions handleClick={onClick} options={options} />
-        </Section>
-        <Section title={'Statistics'}>
-          {total > 0 ? (
-            <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
-              total={total}
-              positive={positive}
-            />
-          ) : (
-            <Notification message="There is no feedback" />
-          )}
-        </Section>
-      </div>
-    );
-  }
-}
+  return (
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 40,
+        color: '#010101',
+      }}
+    >
+      <Section title={'Please leve Feedback'}>
+        <FeedbackOptions handleClick={onClick} options={options} />
+      </Section>
+      <Section title={'Statistics'}>
+        {total > 0 ? (
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            positive={positive}
+          />
+        ) : (
+          <Notification message="There is no feedback" />
+        )}
+      </Section>
+    </div>
+  );
+};
